@@ -37,3 +37,22 @@ exports.updateProduct = async (req, res, next) => {
     product,
   });
 };
+
+// Delete product by id (admin)
+exports.deleteProduct = async (req, res, next) => {
+  const { id } = req.params;
+
+  let product = await Product.findById(id);
+
+  if (!product) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Product not found!" });
+  }
+
+  product.remove();
+
+  res
+    .status(200)
+    .json({ success: true, message: "Product deleted successfully." });
+};
