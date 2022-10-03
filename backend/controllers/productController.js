@@ -15,6 +15,21 @@ exports.getAllProducts = async (req, res, next) => {
   res.status(200).json({ success: true, products });
 };
 
+// Get product details
+exports.getProductDetails = async (req, res, next) => {
+  const { id } = req.params;
+
+  let product = await Product.findById(id);
+
+  if (!product) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Product not found!" });
+  }
+
+  res.status(200).json({ success: true, product });
+};
+
 // Product Update by id (admin)
 exports.updateProduct = async (req, res, next) => {
   const { id } = req.params;
